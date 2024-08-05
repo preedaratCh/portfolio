@@ -1,0 +1,25 @@
+model Contact {
+  id            Int       @id @default(autoincrement())
+  userId        Int // User ID from User model
+  contactTypeId Int // ContactType ID from ContactType model
+  title         String
+  value         String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  deletedAt     DateTime?
+
+  user        User        @relation(fields: [userId], references: [id])
+  contactType ContactType @relation(fields: [contactTypeId], references: [id])
+
+  @@map("contacts")
+}
+
+model User {
+  id       Int       @id
+  contacts Contact[]
+}
+
+model ContactType {
+  id       Int       @id
+  contacts Contact[]
+}
